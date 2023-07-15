@@ -162,7 +162,6 @@ core_loop_fun(site, sponsors, targets, scrolls)
 
 
 
-
 driver.get("https://www.wp.pl/")
 driver.maximize_window()
 driver.implicitly_wait(5)
