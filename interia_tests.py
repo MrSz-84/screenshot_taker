@@ -77,7 +77,7 @@ def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, brandin
                 scroll_to_ad(driver, ad, delta)
             except Exception as e:
                 print(f'Error at site: {site}, at ad: {ad} \
-                with movmenet of {delta} pixels. Error message: {e}')
+                with movement of {delta} pixels. Error message: {e}')
             time.sleep(2)
             take_screenshot(screenshot_path, portal_name, sequence, name)
         driver.find_element(By.TAG_NAME, "body").send_keys(Keys.CONTROL + Keys.HOME)
@@ -102,10 +102,18 @@ options.add_experimental_option("detach", True)
 options.add_argument("--disable-notifications")
 options.add_argument('--start-maximized')
 options.add_argument("--force-device-scale-factor=1")
+# use the line below if cookies are needed
 # options.add_argument(f"--user-data-dir={os.getcwd()}\\cookies_scr_taker")
 
-driver = webdriver.Chrome(options=options, service=Service(
-    ChromeDriverManager().install()))
+
+# driver = webdriver.Chrome(options=options, service=Service(
+#     ChromeDriverManager().install()))
+
+
+# use if webdriver_manager fails
+# give path to webdriver on your hard drive
+driver_path = "C:\\WebDriver\\chromedriver.exe"
+driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
 driver.get("https://www.interia.pl/")
 driver.implicitly_wait(5)
