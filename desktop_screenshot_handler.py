@@ -77,7 +77,7 @@ def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, brandin
                 scroll_to_ad(driver, ad, delta)
             except Exception as e:
                 print(f'Error at site: {site}, at ad: {ad} \
-                with movmenet of {delta} pixels. Error message: {e}')
+                with movement of {delta} pixels. Error message: {e}')
             time.sleep(2)
             take_screenshot(screenshot_path, portal_name, sequence, name)
         driver.find_element(By.TAG_NAME, "body").send_keys(Keys.CONTROL + Keys.HOME)
@@ -102,10 +102,18 @@ options.add_experimental_option("detach", True)
 options.add_argument("--disable-notifications")
 options.add_argument('--start-maximized')
 options.add_argument("--force-device-scale-factor=1")
+# use the line below if cookies are needed
 # options.add_argument(f"--user-data-dir={os.getcwd()}\\cookies_scr_taker")
 
-driver = webdriver.Chrome(options=options, service=Service(
-    ChromeDriverManager().install()))
+
+# driver = webdriver.Chrome(options=options, service=Service(
+#     ChromeDriverManager().install()))
+
+
+# use if webdriver_manager fails
+# give path to webdriver on your hard drive
+driver_path = "C:\\WebDriver\\chromedriver.exe"
+driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
 driver.get("https://www.onet.pl/")
 driver.implicitly_wait(5)
@@ -147,33 +155,3 @@ scrolls = {
 
 # onet traverse and screenshots
 core_loop_fun(site, sponsors, targets, scrolls, brandings)
-
-
-# %% WP
-
-
-# sponsors = ("//*[@id='site-header']/div[1]/div[1]/div[3]", "//*[@id='site-header']/div[1]/div[1]/div[3]")
-"""dodać slot midboxa!"""
-# targets = {
-#     "ppremium_d": "//*[@id='site-header']/div[1]/div[1]/div[3]",
-#     "mdbb_d": "//*[@id='app-content']/div/div[2]/div",
-#     "hp_d": "//*[@id='app-content']/div/div[3]/div[3]/div/div[2]/div",
-#     "baner_okazjonalny_d": "//*[@id='app-content']/div/div[4]/div[1]/div/div/div[1]/div[1]",
-#     "hp_2_d": "//*[@id='glonews']/div[4]/div[2]/aside/div[2]/div",
-#     "content_box_sport_d": "//*[@id='app-content']/div/div[5]/div[2]",
-#     "content_box_biz_d": "//*[@id='app-content']/div/div[7]/div[2]",
-#     "content_box_gwiazdy_d": "//*[@id='app-content']/div/div[9]/div[2]",
-#     "screening_moto_d": "//*[@id='app-content']/div/div[10]/div[3]/div[2]/div",
-#     }
-
-
-# driver.get("https://www.wp.pl/")
-# driver.maximize_window()
-# driver.implicitly_wait(5)
-#
-#
-# # accept cookies
-# cookie = driver.find_element(By.CSS_SELECTOR, "button[aria-label='accept and close']")
-# cookie.click()
-
-
