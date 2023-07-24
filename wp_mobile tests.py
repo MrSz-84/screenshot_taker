@@ -133,50 +133,62 @@ options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like 
 driver_path = "C:\\WebDriver\\chromedriver.exe"
 driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
-driver.get("https://www.onet.pl/")
+driver.get("https://www.wp.pl/")
 driver.implicitly_wait(5)
 
-# %% ONET
+# %% WP
 # accept cookies
 try:
-    cookie = driver.find_element(By.CSS_SELECTOR, "button[aria-label='accept and close']")
+    cookie = driver.find_element(By.XPATH, "//button[text()='AKCEPTUJĘ I PRZECHODZĘ DO SERWISU']")
     cookie.click()
-    time.sleep(1.55)
+    time.sleep(1.25)
 except Exception:
     print("No cookies to accept")
 
-site = "onet"
+try:
+    # cookie2 = driver.find_element(By.TAG_NAME, "svg")
+    cookie2 = driver.find_element(By.XPATH, "//div[@id='WP-cookie-info']/*/*/*")
+    cookie2.click()
+except Exception:
+    print("No cookies to accept")
+
+
+site = "wp"
 
 # expand, collapse pairs in tuples
-sponsors = ("", "//div[@data-section='ad-bottom-bar']//button[text()='ZAMKNIJ']")
+sponsors = ("//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]",  # not ok
+            "//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]")  # not ok
 
 targets = {
-    "bottom_bar_m": "",
-    "oim_m": "//a[@data-gtm='importantnews_6']",
-    "half_e2e_1_m": "//div[@data-slotplhr='slot-right']",
-    # "magazyn_m": "//div[@id='flat-magazyn']",
-    "magazyn_m": "//a[@data-gtm='mobbigboxtop_1']/..",
-    # "rectangle_m": "//div[@data-slotplhr='slot-rectangle']",
-    "rectangle_m": "//a[@data-gtm='mobbigboxtop_4']/div",
-    # "rectangle_1_m": "//div[@data-section='weatherairpollution']",
-    "rectangle_1_m": "//div[@data-section='weatherairpollution']\
-                        //h2[contains(text(), 'Prognoza pogody')]",
-    "tnim_m": "//a[@data-gtm='mobbigboxtop_7']",
-    "cos_ponizej_tnima_m": "//a[@data-gtm='mobbigboxtop_9']"
+    "ppremium_m": "//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]",  # not ok
+    "mdbb_m": "//li[contains(text(), 'Ważne')]",  # ok
+    "rectangle_m": "//div[contains(@class, 'sc-q4pdvg-1')]",  # ok
+    "rectangle_2_m": "//a[contains(text(), 'POGODA GODZINOWA')]",  # ok
+    "hp_m": "//a[contains(@data-st-area, 'Wiadomosci')][5]",  # ok
+    "midbox": "//a[contains(@data-st-area, 'Glonews-high')][2]",  # ok
+    "baner_okazjonalny_m": "",  # not ok
+    "glonews_m": "",  # not ok
+    "glonews_low_m": "//a[contains(@data-st-area, 'Glonews-low')][5]",  # ok
+    "glonews_fin_m": "//section[@id='gloFinance']/a",  # ok
+    "screening_moto_m": "//section[@id='motoTechGames']//a[6]",  # ok
     }
+
 
 scrolls = {
-    "bottom_bar_m": 0,
-    "oim_m": 0,
-    "half_e2e_1_m": 130,
-    "magazyn_m": 100,
-    "rectangle_m": 150,
-    "rectangle_1_m": 30,
-    "tnim_m": -100,
-    "cos_ponizej_tnima_m": 0
-    }
+    "ppremium_m": 0,
+    "mdbb_m": 150,
+    "rectangle_m": 0,
+    "rectangle_2_m": 50,
+    "hp_m": 300,
+    "midbox": 200,
+    "baner_okazjonalny_m": 0,
+    "glonews_m": 0,
+    "glonews_low_m": 100,
+    "glonews_fin_m": 300,
+    "screening_moto_d": 100,
+}
 
 
-# onet traverse and screenshots
+# wp traverse and screenshots
 core_loop_fun(site, sponsors, targets, scrolls, brandings, bottoms)
 

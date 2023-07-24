@@ -62,7 +62,7 @@ def take_screenshot(path, portal, sequence, name):
 
 
 def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, branding_ads, bottom_ads):
-    for sequence in range(8):
+    for sequence in range(2):
         names_list = list(targets.keys())
         for name in names_list:
             target = targets_dict.get(name)

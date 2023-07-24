@@ -133,50 +133,43 @@ options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like 
 driver_path = "C:\\WebDriver\\chromedriver.exe"
 driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
-driver.get("https://www.onet.pl/")
+driver.get("https://www.interia.pl/")
 driver.implicitly_wait(5)
 
-# %% ONET
+# %% INTERIA
 # accept cookies
 try:
-    cookie = driver.find_element(By.CSS_SELECTOR, "button[aria-label='accept and close']")
+    cookie = driver.find_element(By.XPATH, "//button[contains(text(), 'Przejdź do serwisu')]")
     cookie.click()
-    time.sleep(1.55)
+    time.sleep(1.25)
 except Exception:
     print("No cookies to accept")
 
-site = "onet"
+site = "interia"
 
 # expand, collapse pairs in tuples
-sponsors = ("", "//div[@data-section='ad-bottom-bar']//button[text()='ZAMKNIJ']")
+sponsors = ("//span[@id='expandButtonCont']", "//span[@id='collapseButtonCont']")  # not ok
 
 targets = {
-    "bottom_bar_m": "",
-    "oim_m": "//a[@data-gtm='importantnews_6']",
-    "half_e2e_1_m": "//div[@data-slotplhr='slot-right']",
-    # "magazyn_m": "//div[@id='flat-magazyn']",
-    "magazyn_m": "//a[@data-gtm='mobbigboxtop_1']/..",
-    # "rectangle_m": "//div[@data-slotplhr='slot-rectangle']",
-    "rectangle_m": "//a[@data-gtm='mobbigboxtop_4']/div",
-    # "rectangle_1_m": "//div[@data-section='weatherairpollution']",
-    "rectangle_1_m": "//div[@data-section='weatherairpollution']\
-                        //h2[contains(text(), 'Prognoza pogody')]",
-    "tnim_m": "//a[@data-gtm='mobbigboxtop_7']",
-    "cos_ponizej_tnima_m": "//a[@data-gtm='mobbigboxtop_9']"
+    "branding_m": "//span[@id='expandButtonCont']",  # not ok
+    "gorny_slot_m": "//a[contains(text(), 'Polecane')]",
+    "hp_dis_m": "//div[@id='wydarzenia']//a[contains(text(), 'Wydarzenia')]",
+    "baner_sport_m": "//a[contains(text(), 'Sport')]",
+    "baner_biz_m": "//a[contains(text(), 'Biznes')]",
+    "baner_moto_m": "//a[contains(text(), 'Motoryzacja')]",
     }
+
 
 scrolls = {
-    "bottom_bar_m": 0,
-    "oim_m": 0,
-    "half_e2e_1_m": 130,
-    "magazyn_m": 100,
-    "rectangle_m": 150,
-    "rectangle_1_m": 30,
-    "tnim_m": -100,
-    "cos_ponizej_tnima_m": 0
+    "branding_m": 0,
+    "gorny_slot_m": 200,
+    "hp_dis_m": 100,
+    "baner_sport_m": 200,
+    "baner_biz_m": 200,
+    "baner_moto_m": 200,
     }
 
 
-# onet traverse and screenshots
+# interia traverse and screenshots
 core_loop_fun(site, sponsors, targets, scrolls, brandings, bottoms)
 
