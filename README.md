@@ -20,7 +20,8 @@ Python v 3.11
 
 ### Last update: 
 
-**23.07.2023**  and work in progress...
+**24.07.2023**  and work in progress... some minor changes to desktop version, 
+                working mainly on mobile ones
 
 <br>
 

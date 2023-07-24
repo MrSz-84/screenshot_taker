@@ -140,14 +140,14 @@ sponsors = ("", "")
 
 targets = {
     "topboard_d": "",
-    "mdbb": "//div[@id='hook_box_top1']",
+    "mdbb_d": "//div[@id='hook_box_top1']",
     "hp_d": "//div[@class='gl_plugin listing']",
     }
 
 
 scrolls = {
     "topboard_d": 0,
-    "mdbb": 0,
+    "mdbb_d": 0,
     "hp_d": 0,
     }
 
