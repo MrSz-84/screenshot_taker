@@ -61,33 +61,48 @@ def take_screenshot(path, portal, sequence, name):
     time.sleep(1)
 
 
-def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, branding_ads):
+def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, branding_ads, bottom_ads):
     for sequence in range(8):
-        ads_sg = {}
-        for name, target in targets_dict.items():
+        names_list = list(targets.keys())
+        for name in names_list:
+            target = targets_dict.get(name)
             destination = make_target_ads(driver, name, target, branding_ads)
-            ads_sg[name] = destination
-        for name, ad in ads_sg.items():
             delta = scrolls_dict.get(name)
-            if name == list(scrolls_dict.keys())[0]:
-                sponsoring_unroll(
-                    driver, ad, screenshot_path, portal_name, name, sequence, sponsors_tup[1])
+            if name in branding_ads:
+                sponsoring_unroll(driver, destination, screenshot_path,
+                                  portal_name, name, sequence, sponsors_tup[1])
+                continue
+            if name in bottom_ads:
+                bottom_bars(driver, screenshot_path, portal_name, name, sequence, sponsors_tup[1])
                 continue
             try:
-                scroll_to_ad(driver, ad, delta)
+                scroll_to_ad(driver, destination, delta)
             except Exception as e:
-                print(f'Error at site: {site}, at ad: {ad} \
+                print(f'Error at site: {site}, at ad: {destination} \
                 with movement of {delta} pixels. Error message: {e}')
-            time.sleep(2)
+            time.sleep(3)
             take_screenshot(screenshot_path, portal_name, sequence, name)
+            # dodać ruch ekranu w dół, aby ułatwić łapanie obiektu mobilnego
         driver.find_element(By.TAG_NAME, "body").send_keys(Keys.CONTROL + Keys.HOME)
         time.sleep(4)
         driver.refresh()
-        ads_sg.clear()
         time.sleep(1)
 
 
-brandings = ("sponsor_d", "ppremium_d", "branding_d", "premiumboard_d", "topboard_d")
+def bottom_bars(driver, screenshot_dir, site_name, name, sequence, collapse):
+    try:
+        take_screenshot(screenshot_dir, site_name, sequence, name)
+        driver.find_element(By.XPATH, collapse).click()
+        time.sleep(2)
+    except Exception as e:
+        print(f"No close element available: {name} at page {site_name}.")
+        print(f"Error code: {e}")
+        pass
+
+
+brandings = ("sponsor_m", "ppremium_m", "branding_m", "premiumboard_m", "topboard_m")
+
+bottoms = ("bottom_bar_m", )
 
 try:
     os.mkdir(".\\screenshots")
@@ -123,15 +138,12 @@ driver.implicitly_wait(5)
 try:
     cookie = driver.find_element(By.XPATH, "//button[@id='didomi-notice-agree-button']")
     cookie.click()
-    time.sleep(1.25)
+    time.sleep(1.55)
 except Exception:
     print("No cookies to accept")
 
-# time.sleep(5)
 
 site = "filmweb"
-
-# when sponsor available locate expand collapse buttons
 
 # expand, collapse pairs in tuples
 sponsors = ("", "")  # not ok
@@ -148,12 +160,6 @@ scrolls = {
     }
 
 
-# filmweb sg traverse and screenshots
-core_loop_fun(site, sponsors, targets, scrolls, brandings)
-
-
-
-
-
-
+# filmweb traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings, bottoms)
 

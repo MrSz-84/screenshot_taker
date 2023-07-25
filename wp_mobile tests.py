@@ -141,7 +141,7 @@ driver.implicitly_wait(5)
 try:
     cookie = driver.find_element(By.XPATH, "//button[text()='AKCEPTUJĘ I PRZECHODZĘ DO SERWISU']")
     cookie.click()
-    time.sleep(1.25)
+    time.sleep(1.75)
 except Exception:
     print("No cookies to accept")
 
@@ -156,17 +156,16 @@ except Exception:
 site = "wp"
 
 # expand, collapse pairs in tuples
-sponsors = ("//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]",  # not ok
-            "//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]")  # not ok
+sponsors = ("//*[@id='root']/div/div[1]/div[1]/div/img[contains(., scr)]",  # ok
+            "//*[@id='root']/div/div[1]/div[1]/div/img[contains(., scr)]")  # ok
 
 targets = {
-    "ppremium_m": "//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]",  # not ok
+    "ppremium_m": "//*[@id='root']/div/div[1]/div[1]/div/img[contains(., scr)]",  # ok
     "mdbb_m": "//li[contains(text(), 'Ważne')]",  # ok
-    "rectangle_m": "//div[contains(@class, 'sc-q4pdvg-1')]",  # ok
+    "baner_okazjonalny_m": "//div[contains(@class, 'sc-q4pdvg-1')]",  # ok
     "rectangle_2_m": "//a[contains(text(), 'POGODA GODZINOWA')]",  # ok
-    "hp_m": "//a[contains(@data-st-area, 'Wiadomosci')][5]",  # ok
+    "hp_m": "//a[contains(@data-st-area, 'Wiadomosci')][3]",  # ok
     "midbox": "//a[contains(@data-st-area, 'Glonews-high')][2]",  # ok
-    "baner_okazjonalny_m": "",  # not ok
     "glonews_m": "",  # not ok
     "glonews_low_m": "//a[contains(@data-st-area, 'Glonews-low')][5]",  # ok
     "glonews_fin_m": "//section[@id='gloFinance']/a",  # ok
@@ -177,11 +176,10 @@ targets = {
 scrolls = {
     "ppremium_m": 0,
     "mdbb_m": 150,
-    "rectangle_m": 0,
-    "rectangle_2_m": 50,
-    "hp_m": 300,
-    "midbox": 200,
     "baner_okazjonalny_m": 0,
+    "rectangle_2_m": 50,
+    "hp_m": 0,
+    "midbox": 200,
     "glonews_m": 0,
     "glonews_low_m": 100,
     "glonews_fin_m": 300,
