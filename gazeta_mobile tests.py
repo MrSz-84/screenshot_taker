@@ -124,14 +124,14 @@ options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like 
 # options.add_argument(f"--user-data-dir={os.getcwd()}\\cookies_scr_taker")
 
 
-# driver = webdriver.Chrome(options=options, service=Service(
-#     ChromeDriverManager().install()))
+driver = webdriver.Chrome(options=options, service=Service(
+    ChromeDriverManager().install()))
 
 
 # use if webdriver_manager fails
 # give path to webdriver on your hard drive
-driver_path = "C:\\WebDriver\\chromedriver.exe"
-driver = webdriver.Chrome(options=options, service=Service(driver_path))
+# driver_path = "C:\\WebDriver\\chromedriver.exe"
+# driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
 driver.get("https://m.gazeta.pl/0,0.html")
 driver.implicitly_wait(5)

@@ -163,10 +163,9 @@ targets = {
     "ppremium_m": "//*[@id='root']/div/div[1]/div[1]/div/img[contains(., scr)]",  # ok
     "mdbb_m": "//li[contains(text(), 'Ważne')]",  # ok
     "baner_okazjonalny_m": "//div[contains(@class, 'sc-q4pdvg-1')]",  # ok
-    "rectangle_2_m": "//a[contains(text(), 'POGODA GODZINOWA')]",  # ok
+    "glonews_m": "//a[contains(text(), 'POGODA GODZINOWA')]",  # ok
     "hp_m": "//a[contains(@data-st-area, 'Wiadomosci')][3]",  # ok
     "midbox": "//a[contains(@data-st-area, 'Glonews-high')][2]",  # ok
-    "glonews_m": "",  # not ok
     "glonews_low_m": "//a[contains(@data-st-area, 'Glonews-low')][5]",  # ok
     "glonews_fin_m": "//section[@id='gloFinance']/a",  # ok
     "screening_moto_m": "//section[@id='motoTechGames']//a[6]",  # ok
@@ -177,10 +176,9 @@ scrolls = {
     "ppremium_m": 0,
     "mdbb_m": 150,
     "baner_okazjonalny_m": 0,
-    "rectangle_2_m": 50,
+    "glonews_m": 50,
     "hp_m": 0,
     "midbox": 200,
-    "glonews_m": 0,
     "glonews_low_m": 100,
     "glonews_fin_m": 300,
     "screening_moto_d": 100,

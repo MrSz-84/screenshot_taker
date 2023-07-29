@@ -20,7 +20,7 @@ Python v 3.11
 
 ### Last update: 
 
-**25.07.2023**  and work in progress... some minor changes to desktop version, 
+**29.07.2023**  and work in progress... some minor changes to desktop version, 
                 working mainly on mobile ones
 
 <br>
@@ -29,4 +29,4 @@ Python v 3.11
 
 Today (20.07.2023) webdriver_manager started to generate problems. It seems it cannot locate the url to download 
 latest version of chromedriver. As a mitigation I've added a path to driver on my hard drive. 
-So please keep that in mind, if it suddenly stops working one day also.  
+So please keep that in mind, if it suddenly stops working one day also.

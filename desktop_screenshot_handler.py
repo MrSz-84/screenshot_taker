@@ -87,7 +87,8 @@ def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, brandin
         time.sleep(1)
 
 
-brandings = ("sponsor_d", "ppremium_d", "branding_d", "premiumboard_d", "topboard_d")
+brandings = ("sponsor_d", "ppremium_d", "branding_d", "premiumboard_d", "topboard_d",
+             "sponsoring_d")
 
 try:
     os.mkdir(".\\screenshots")
@@ -115,10 +116,13 @@ options.add_argument("--force-device-scale-factor=1")
 driver_path = "C:\\WebDriver\\chromedriver.exe"
 driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
+
+# %% ONET
+
+# open site
 driver.get("https://www.onet.pl/")
 driver.implicitly_wait(5)
 
-# %% ONET
 # accept cookies
 try:
     cookie = driver.find_element(By.CSS_SELECTOR, "button[aria-label='accept and close']")
@@ -154,4 +158,233 @@ scrolls = {
     }
 
 # onet traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings)
+
+
+# %% WP
+
+# open site
+driver.get("https://www.wp.pl/")
+driver.implicitly_wait(6)
+
+# accept cookies
+try:
+    cookie = driver.find_element(By.XPATH, "//button[text()='AKCEPTUJĘ I PRZECHODZĘ DO SERWISU']")
+    cookie.click()
+    time.sleep(1.25)
+except Exception:
+    print("No cookies to accept")
+
+try:
+    cookie2 = driver.find_element(By.TAG_NAME, "svg")
+    cookie2.click()
+except Exception:
+    print("No cookies to accept")
+
+time.sleep(2)
+
+site = "wp"
+
+# expand, collapse pairs in tuples
+sponsors = ("//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]",
+            "//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]")
+
+targets = {
+    "ppremium_d": "//div[@id='site-header']/div[1]/div[1]/img[contains(., scr)]",  # ok
+    "mdbb_d": "//div[contains(@class, 'sc-am7de8-1')]//a[contains(text(), 'TYM ŻYJE POLSKA')]",  # ok
+    "hp_d": "//div[contains(@class, 'sc-b3pols-2')]",  # ok
+    "baner_okazjonalny_d": "//aside[@class='sc-wc57lf-0 iTPMnl']//div[@data-st-area='Wiadomosci']/a",  # ok
+    "midbox": "//div[@id='wp-weather-widget']//a[contains(text(), 'Prognoza')]",  # ok
+    "hp_2_d": "//div[contains(@class, 'sc-oavu9q-0')]//div[contains(@class, 'sc-qhhnks-0')]/..",  # ok
+    "content_box_sport_d": "//div[@data-section='sport']//div[contains(@class, 'sc-msqvd4-0')]/a[4]",  # ok
+    "content_box_biz_d": "//div[@data-section='finances']//div[contains(@class, 'sc-1cnv2xe-3')]/div[1]",  # ok
+    "content_box_gwiazdy_d": "//div[@data-section='celebrities']//div[contains(@class, 'sc-1cnv2xe-3')]/div[1]",  # ok
+    "screening_moto_d": "//div[contains(@class, 'sc-11fiv62-0')]//a[contains(text(), 'Motoryzacja')]",  # ok
+    }
+
+
+scrolls = {
+    "ppremium_d": 0,
+    "mdbb_d": 0,
+    "hp_d": 50,
+    "baner_okazjonalny_d": 0,
+    "midbox": 350,
+    "hp_2_d": 0,
+    "content_box_sport_d": 0,
+    "content_box_biz_d": 100,
+    "content_box_gwiazdy_d": 100,
+    "screening_moto_d": 450,
+    }
+
+# wp traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings)
+
+
+# %% INTERIA
+
+# open site
+driver.get("https://www.interia.pl/")
+driver.implicitly_wait(5)
+
+# accept cookies
+try:
+    cookie = driver.find_element(By.XPATH, "//button[contains(text(), 'Przejdź do serwisu')]")
+    cookie.click()
+    time.sleep(1.25)
+except Exception:
+    print("No cookies to accept")
+
+time.sleep(2)
+
+site = "interia"
+
+# expand, collapse pairs in tuples
+sponsors = ("//span[@id='expandButtonCont']", "//span[@id='collapseButtonCont']")
+
+targets = {
+    "branding_d": "//span[@id='expandButtonCont']",
+    "gorny_slot_d": "//div[@id='ad-gora_srodek']",
+    "hp_dis_d": "//div[@id='ad-view-halfpage_wydarzenia']/../..",
+    "hp_polecane_d": "//div[@id='ad-view-halfpage_wydarzenia_2']/../..",
+    "baner_sport_d": "//a[contains(text(), 'Sport')]",
+    "hp_sport_d": "//div[@id='ad-view-halfpage_sport']/../../..",
+    "baner_biz_d": "//a[contains(text(), 'Biznes')]",
+    "hp_biz_d": "//div[@id='ad-view-halfpage_biznes']/../../..",
+    "baner_moto_d": "//a[contains(text(), 'Motoryzacja')]",
+    }
+
+
+scrolls = {
+    "branding_d": 0,
+    "gorny_slot_d": 0,
+    "hp_dis_d": 0,
+    "hp_polecane_d": 0,
+    "baner_sport_d": 0,
+    "hp_sport_d": 0,
+    "baner_biz_d": 0,
+    "hp_biz_d": 0,
+    "baner_moto_d": 0,
+    }
+
+# interia traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings)
+
+
+# %% GAZETA
+
+# open site
+driver.get("https://www.gazeta.pl/0,0.html")
+driver.implicitly_wait(5)
+
+# accept cookies
+try:
+    cookie = driver.find_element(
+        By.XPATH,
+        "//button[@id='onetrust-accept-btn-handler']//span[contains(text(), 'AKCEPTUJĘ')]")
+    cookie.click()
+    time.sleep(1.25)
+except Exception:
+    print("No cookies to accept")
+
+# time.sleep(5)
+
+site = "gazeta"
+
+# expand, collapse pairs in tuples
+sponsors = ("//div[@id='openAds'][contains(., 'ROZWIŃ')]", "//div[@id='closeAds'][contains(., 'ZWIŃ')]")
+
+targets = {
+    "premiumboard_d": "//div[@id='openAds'][contains(., 'ROZWIŃ')]",
+    "topboard_d": "//div[@class='timeline']//div[contains(text(), 'Najnowsze')]",
+    "hp_d": "//div[@class='hotNews']",
+    }
+
+
+scrolls = {
+    "premiumboard_d": 0,
+    "topboard_d": 0,
+    "hp_d": 75,
+    }
+
+
+# gazeta traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings)
+
+
+# %% SE
+
+# open site
+driver.get("https://www.se.pl/")
+driver.implicitly_wait(5)
+
+# accept cookies
+try:
+    cookie = driver.find_element(
+        By.XPATH,
+        "//button[contains(@class, 'shared-module_text-white')][text()[contains(., 'Akceptuję')]]")
+    cookie.click()
+    time.sleep(1.25)
+except Exception:
+    print("No cookies to accept")
+
+# time.sleep(5)
+
+site = "se"
+
+# when sponsor available locate expand collapse buttons
+
+# expand, collapse pairs in tuples
+sponsors = ("", "")
+
+targets = {
+    "topboard_d": "",
+    "mdbb_d": "//div[@id='hook_box_top1']",
+    "hp_d": "//div[@class='gl_plugin listing']",
+    }
+
+
+scrolls = {
+    "topboard_d": 0,
+    "mdbb_d": 0,
+    "hp_d": 0,
+    }
+
+
+# se traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings)
+
+
+# %% FILMWEB SG
+
+# open site
+driver.get("https://www.filmweb.pl/")
+driver.implicitly_wait(5)
+
+# accept cookies
+try:
+    cookie = driver.find_element(By.XPATH, "//button[@id='didomi-notice-agree-button']")
+    cookie.click()
+    time.sleep(1.55)
+except Exception:
+    print("No cookies to accept")
+
+
+site = "filmweb"
+
+# expand, collapse pairs in tuples
+sponsors = ("//div[@class='faSponsoring__btn']", "//div[@class='faSponsoring__btn']")  # not ok
+
+targets = {
+    "sponsoring_d": "//div[@class='faSponsoring__btn']",  # not ok
+    "screening": "//div[@style='position: relative;']//div[contains(@class, 'fa__slot fa__slot')]",
+    }
+
+
+scrolls = {
+    "sponsoring": 0,
+    "screening": 0,
+    }
+
+
+# filmweb traverse and screenshots
 core_loop_fun(site, sponsors, targets, scrolls, brandings)

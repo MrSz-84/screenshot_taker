@@ -140,10 +140,10 @@ site = "filmweb"
 # when sponsor available locate expand collapse buttons
 
 # expand, collapse pairs in tuples
-sponsors = ("", "")  # not ok
+sponsors = ("//div[@class='faSponsoring__btn']", "//div[@class='faSponsoring__btn']")  # ok
 
 targets = {
-    "sponsoring_d": "",  # not ok
+    "sponsoring_d": "//div[@class='faSponsoring__btn']",  # ok
     "screening": "//div[@style='position: relative;']//div[contains(@class, 'fa__slot fa__slot')]",
     }
 

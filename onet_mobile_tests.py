@@ -61,6 +61,7 @@ def take_screenshot(path, portal, sequence, name):
     time.sleep(1)
 
 
+
 def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, branding_ads, bottom_ads):
     for sequence in range(2):
         names_list = list(targets.keys())
@@ -98,6 +99,10 @@ def bottom_bars(driver, screenshot_dir, site_name, name, sequence, collapse):
         print(f"No close element available: {name} at page {site_name}.")
         print(f"Error code: {e}")
         pass
+
+
+# def push(driver, delta=100):
+#     webdriver.ActionChains(driver).scroll_by_amount(0, delta).perform()
 
 
 brandings = ("sponsor_m", "ppremium_m", "branding_m", "premiumboard_m", "topboard_m")
@@ -154,6 +159,7 @@ targets = {
     "bottom_bar_m": "",
     "oim_m": "//a[@data-gtm='importantnews_6']",
     "half_e2e_1_m": "//div[@data-slotplhr='slot-right']",
+    "po_drodze": "//div[@data-name='Module mobileFeed Template standard 2']//a",
     # "magazyn_m": "//div[@id='flat-magazyn']",
     "magazyn_m": "//a[@data-gtm='mobbigboxtop_1']/..",
     # "rectangle_m": "//div[@data-slotplhr='slot-rectangle']",
@@ -169,6 +175,7 @@ scrolls = {
     "bottom_bar_m": 0,
     "oim_m": 0,
     "half_e2e_1_m": 130,
+    "po_drodze": 500,
     "magazyn_m": 100,
     "rectangle_m": 150,
     "rectangle_1_m": 30,

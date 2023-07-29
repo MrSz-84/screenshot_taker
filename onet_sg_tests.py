@@ -61,43 +61,30 @@ def take_screenshot(path, portal, sequence, name):
     time.sleep(1)
 
 
-def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, branding_ads, bottom_ads):
+def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, branding_ads):
     for sequence in range(8):
-        names_list = list(targets.keys())
-        for name in names_list:
-            target = targets_dict.get(name)
+        ads_sg = {}
+        for name, target in targets_dict.items():
             destination = make_target_ads(driver, name, target, branding_ads)
+            ads_sg[name] = destination
+        for name, ad in ads_sg.items():
             delta = scrolls_dict.get(name)
-            if name in branding_ads:
-                sponsoring_unroll(driver, destination, screenshot_path,
-                                  portal_name, name, sequence, sponsors_tup[1])
-                continue
-            if name in bottom_ads:
-                bottom_bars(driver, screenshot_path, portal_name, name, sequence, sponsors_tup[1])
+            if name == list(scrolls_dict.keys())[0]:
+                sponsoring_unroll(
+                    driver, ad, screenshot_path, portal_name, name, sequence, sponsors_tup[1])
                 continue
             try:
-                scroll_to_ad(driver, destination, delta)
+                scroll_to_ad(driver, ad, delta)
             except Exception as e:
-                print(f'Error at site: {site}, at ad: {destination} \
+                print(f'Error at site: {site}, at ad: {ad} \
                 with movement of {delta} pixels. Error message: {e}')
-            time.sleep(3)
+            time.sleep(2)
             take_screenshot(screenshot_path, portal_name, sequence, name)
-            # dodać ruch ekranu w dół, aby ułatwić łapanie obiektu mobilnego
         driver.find_element(By.TAG_NAME, "body").send_keys(Keys.CONTROL + Keys.HOME)
         time.sleep(4)
         driver.refresh()
+        ads_sg.clear()
         time.sleep(1)
-
-
-def bottom_bars(driver, screenshot_dir, site_name, name, sequence, collapse):
-    try:
-        take_screenshot(screenshot_dir, site_name, sequence, name)
-        driver.find_element(By.XPATH, collapse).click()
-        time.sleep(2)
-    except Exception as e:
-        print(f"No close element available: {name} at page {site_name}.")
-        print(f"Error code: {e}")
-        pass
 
 
 brandings = ("sponsor_d", "ppremium_d", "branding_d", "premiumboard_d", "topboard_d",
@@ -131,36 +118,43 @@ options.add_argument("--force-device-scale-factor=1")
 driver_path = "C:\\WebDriver\\chromedriver.exe"
 driver = webdriver.Chrome(options=options, service=Service(driver_path))
 
-driver.get("https://www.filmweb.pl/")
+driver.get("https://www.onet.pl/")
 driver.implicitly_wait(5)
 
-# %% FILMWEB SG
+# %% ONET
 # accept cookies
 try:
-    cookie = driver.find_element(By.XPATH, "//button[@id='didomi-notice-agree-button']")
+    cookie = driver.find_element(By.CSS_SELECTOR, "button[aria-label='accept and close']")
     cookie.click()
-    time.sleep(1.55)
 except Exception:
     print("No cookies to accept")
 
-
-site = "filmweb"
+site = "onet"
 
 # expand, collapse pairs in tuples
-sponsors = ("//div[@class='faSponsoring__btn']", "//div[@class='faSponsoring__btn']")  # not ok
+sponsors = ("//div[@class='btn expand']", "//div[@class='btn collapse']")
 
 targets = {
-    "sponsoring_d": "//div[@class='faSponsoring__btn']",  # not ok
-    "screening": "//div[@style='position: relative;']//div[contains(@class, 'fa__slot fa__slot')]",
+    "sponsor_d": "//div[@class='btn expand']",
+    "oim_d": "//div[@data-slotplhr='slot-top']",
+    "tnim_d": "//h2[@title='Wiadomości']",
+    "booster_d": "//div[@data-slotplhr='slot-right']",
+    "odin1_d": "//div[@class='StandardRightFeed_othersWrap__aQxc2']//a[text()='Skarb Kibica']",
+    "hp_2_d": "//div[@data-slotplhr='slot-right2']",
+    "odin2_d": "//div[@class='StandardRightFeed_othersWrap__aQxc2']//a[text()='Kalkulator wynagrodzeń']",
+    "hp_3_d": "//div[@data-slotplhr='slot-right2']//div[@id='right3stickydesktop']/../..",
     }
-
 
 scrolls = {
-    "sponsoring": 0,
-    "screening": 0,
+    "sponsor_d": 0,
+    "oim_d": 250,
+    "tnim_d": 0,
+    "booster_d": 0,
+    "odin1_d": 0,
+    "hp_2_d": 0,
+    "odin2_d": 0,
+    "hp_3_d": 0,
     }
 
-
-# filmweb traverse and screenshots
-core_loop_fun(site, sponsors, targets, scrolls, brandings, bottoms)
-
+# onet traverse and screenshots
+core_loop_fun(site, sponsors, targets, scrolls, brandings)

@@ -87,7 +87,10 @@ def core_loop_fun(portal_name, sponsors_tup, targets_dict, scrolls_dict, brandin
         time.sleep(1)
 
 
-brandings = ("sponsor_d", "ppremium_d", "branding_d", "premiumboard_d", "topboard_d")
+brandings = ("sponsor_d", "ppremium_d", "branding_d", "premiumboard_d", "topboard_d",
+             "sponsoring_d")
+
+bottoms = ("bottom_bar_m", )
 
 try:
     os.mkdir(".\\screenshots")
